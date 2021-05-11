@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    environment {
+        registry = 'maoztamir'
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+
+    stages {
+        /*
+        stage('Build') {
+            parallel {
+                stage('NodeJs') {
+                    agent {
+                        docker {
+                            image 'node'
+                        }
+                    }
+                    steps {
+                        sh 'node --version'
+                    }
+                }
+
+                stage('Docker') {
+                    agent {
+                        docker {
+                            image 'docker'
+                        }
+                    }
+                    steps {
+                        sh 'docker --version'
+                    }
+                }
+
+            }
+        }
+        */
+        stage('Git') {
+            steps {
+                git 'https://github.com/maoz26/devops-final.git'
+            }
+        }
+        /*
+        stage('Build image') {
+            steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+                  echo "Build number #${env.BUILD_NUMBER}"
+            }
+        }
+        */
+        stage('Deploy our image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+    }
+}
