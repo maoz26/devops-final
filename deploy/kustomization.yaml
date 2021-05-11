@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service-backend.yaml
+  - tcp-liveness-readiness.yaml
+  - master-deploy.yaml
+  - cron-job.yaml
+  - config-map.yaml
+  - secret.yaml
+  - statefullset-database.yaml

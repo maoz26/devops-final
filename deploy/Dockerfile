@@ -1,0 +1,27 @@
+FROM node
+
+RUN \
+    mkdir -p /app
+
+COPY package*.json /app/
+
+ENV APP_NAME = $APP_NAME
+ENV APP_PORT = $APP_PORT
+ENV MONGO_DB_ROOT_USERNAME = $MONGO_DB_ROOT_USERNAME
+ENV MONGO_DB_ROOT_PASSWORD = $MONGO_DB_ROOT_PASSWORD
+ENV MONGO_DB_DATABASE = $MONGO_DB_DATABASE
+ENV MONGO_HOST_URL = $MONGO_HOST_URL
+
+WORKDIR /app/
+
+RUN \
+    npm install
+
+COPY . .
+
+RUN \
+    npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "prod"]

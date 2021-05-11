@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    group: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: app
+        tier: backend
+    spec:
+      containers:
+        - name: node
+          image: maoztamir/devops-final-project
+          env:
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config-map
+                  key: APP_NAME
