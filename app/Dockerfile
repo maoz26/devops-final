@@ -1,9 +1,7 @@
-FROM node
-
-RUN \
-    mkdir -p /app
-
-COPY package*.json /app/
+FROM node:12-alpine
+RUN apk add --no-cache python g++ make
+WORKDIR /app
+COPY . .
 
 ENV APP_NAME = $APP_NAME
 ENV APP_PORT = $APP_PORT
@@ -12,16 +10,5 @@ ENV MONGO_DB_ROOT_PASSWORD = $MONGO_DB_ROOT_PASSWORD
 ENV MONGO_DB_DATABASE = $MONGO_DB_DATABASE
 ENV MONGO_HOST_URL = $MONGO_HOST_URL
 
-WORKDIR /app/
-
-RUN \
-    npm install
-
-COPY . .
-
-RUN \
-    npm run build
-
-EXPOSE 3000
-
-CMD ["npm", "run", "prod"]
+RUN yarn install --production
+CMD ["node", "src/index.js"]

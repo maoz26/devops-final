@@ -7,7 +7,6 @@ pipeline {
     }
 
     stages {
-        /*
         stage('Build') {
             parallel {
                 stage('NodeJs') {
@@ -34,14 +33,12 @@ pipeline {
 
             }
         }
-        */
         stage('Git') {
             steps {
                 git 'https://github.com/maoz26/devops-final.git'
             }
         }
-        /*
-        stage('Build image') {
+        stage('Image') {
             steps{
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -49,8 +46,7 @@ pipeline {
                   echo "Build number #${env.BUILD_NUMBER}"
             }
         }
-        */
-        stage('Deploy our image') {
+        stage('Deploy') {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
@@ -59,7 +55,7 @@ pipeline {
                 }
             }
         }
-        stage('Cleaning up') {
+        stage('Clean') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
             }
