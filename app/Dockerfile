@@ -1,7 +1,7 @@
-FROM node:12-alpine
-RUN apk add --no-cache python g++ make
+FROM node
+RUN mkdir /app
 WORKDIR /app
-COPY . .
+COPY . /app
 
 ENV APP_NAME = $APP_NAME
 ENV APP_PORT = $APP_PORT
@@ -10,5 +10,5 @@ ENV MONGO_DB_ROOT_PASSWORD = $MONGO_DB_ROOT_PASSWORD
 ENV MONGO_DB_DATABASE = $MONGO_DB_DATABASE
 ENV MONGO_HOST_URL = $MONGO_HOST_URL
 
-RUN yarn install --production
-CMD ["node", "src/index.js"]
+RUN npm install
+CMD npm run start
