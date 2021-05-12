@@ -48,12 +48,12 @@ spec:
             - name: database
               mountPath: /data/db
           env:
-            - name: MONGO_INITDB_DATABASE
-              value: subscribe
-            - name: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_DB_DATABASE
+              value: testdb
+            - name: MONGO_DB_ROOT_USERNAME
               value: root
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: rootpassword
+            - name: MONGO_DB_ROOT_PASSWORD
+              value: password
   volumeClaimTemplates:
     - metadata:
         name: database

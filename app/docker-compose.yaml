@@ -34,7 +34,7 @@ services:
       - .env
     volumes:
       - ./home/mongodb:/home/mongodb
-      - ./mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo.js:/docker-entrypoint-initdb.d/mongo.js:ro
       - ./mongo-volume:/data/db
     ports:
       - 27017:27017
